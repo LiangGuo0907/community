@@ -1,5 +1,6 @@
 package life.wl.community.dto;
 
+
 public class GithubUser {
     private String name;
     private long id;
