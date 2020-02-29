@@ -1,5 +1,6 @@
 package life.wl.community.controller;
 
+import life.wl.community.dto.PaginationDTO;
 import life.wl.community.dto.QuestionDTO;
 import life.wl.community.mapper.QuestionMapper;
 import life.wl.community.mapper.UserMapper;
@@ -24,7 +25,11 @@ public class IndexController {
     private QuestionService questionService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request,Model model){
+    public String index(
+            HttpServletRequest request,
+            Model model,
+            @RequestParam(name = "page",defaultValue = "1")Integer page,
+            @RequestParam(name = "size",defaultValue = "2")Integer size){
         //验证用户是否已登录，如果登录就显示用户名
         Cookie[] cookies = request.getCookies();
         if(cookies != null){
@@ -41,8 +46,8 @@ public class IndexController {
         }
 
         //从question数据表中查出发布的问题的相关数据
-        List<QuestionDTO> questionList = questionService.list();
-        model.addAttribute("questions",questionList);
+        PaginationDTO paginationDTO = questionService.list(page,size);
+        model.addAttribute("pagination",paginationDTO);
         return "index";
     }
 

@@ -1,5 +1,6 @@
 package life.wl.community.service;
 
+import life.wl.community.dto.PaginationDTO;
 import life.wl.community.dto.QuestionDTO;
 import life.wl.community.mapper.QuestionMapper;
 import life.wl.community.mapper.UserMapper;
@@ -22,9 +23,23 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public List<QuestionDTO> list() {
-        List<Question> questionList = questionMapper.list();
+    public PaginationDTO list(Integer page,Integer size) {
+        Integer totalCount = questionMapper.count();//分页总数
+        Integer totalPage;
+        if (totalCount % size == 0){
+            totalPage = totalCount/size;
+        }else {
+            totalPage = totalCount/size + 1;
+        }
+        if (page<1){
+            page = 1;
+        }else if(page > totalPage){
+            page = totalPage;
+        }
+        Integer offset = size * (page - 1);
+        List<Question> questionList = questionMapper.list(offset,size);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
+        PaginationDTO paginationDTO = new PaginationDTO();
         for (Question question : questionList){
             User user = userMapper.findById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
@@ -33,7 +48,9 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
             questionDTO.setTime(getTime(question.getGmtCreate()));
         }
-        return questionDTOList;
+        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setPagination(totalPage,page,size);
+        return paginationDTO;
     }
 
 
