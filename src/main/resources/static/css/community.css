@@ -1,5 +1,5 @@
 body{
-    background-color: #efefef;
+    background-image: url("/images/backgroundImg.png");
 }
 .main{
     background-color: white;
@@ -20,4 +20,12 @@ body{
 }
 .profile .section{
     margin-top: 19px;
+}
+.community-menu{
+    color: #999;
+    font-size: 13px;
+}
+.leftQuestion{
+    border-right: 1px solid;
+    border-color: #E6E6E6;
 }

@@ -91,4 +91,14 @@ public class QuestionService {
         // 时间戳转换成时间
         return sdff.format(new Date(createTime));
     }
+
+    public QuestionDTO getById(Integer id) {
+        Question question = questionMapper.getById(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        questionDTO.setTime(getTime(question.getGmtCreate()));
+        BeanUtils.copyProperties(question,questionDTO);
+        User user = userMapper.findById(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
 }

@@ -1,5 +1,6 @@
 package life.wl.community.mapper;
 
+import life.wl.community.dto.QuestionDTO;
 import life.wl.community.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,7 +14,7 @@ public interface QuestionMapper {
             "values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tag})")
     void create(Question question);
 
-    @Select("select * from question limit #{offset},#{size}")
+    @Select("select * from question order by gmt_create desc limit #{offset},#{size}")
     List<Question> list(Integer offset,Integer size);
 
     @Select("select count(1) from question")
@@ -24,4 +25,7 @@ public interface QuestionMapper {
 
     @Select("select count(1) from question where creator=#{userId}")
     Integer countByUserId(Integer userId);
+
+    @Select("select * from question where id=#{id}")
+    Question getById(Integer id);
 }
