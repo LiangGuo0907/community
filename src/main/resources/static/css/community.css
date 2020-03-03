@@ -13,6 +13,9 @@ body{
     width: 38px;
     height: 38px;
 }
+.userNameText {
+    padding-top: 10px;
+}
 .text-desc{
     font-size: 12px;
     font-weight: normal;
@@ -28,4 +31,60 @@ body{
 .leftQuestion{
     border-right: 1px solid;
     border-color: #E6E6E6;
+}
+.jumbotron{
+    margin: 50px;
+    background-image: url(/images/backgroundImg.png);
+    text-align:center;
+    ext-align:line-height;
+}
+.commentText{
+    margin: 10px 0;
+}
+.btn-comment{
+    float: right;
+    margin-bottom: 10px;
+}
+.comment-menu{
+    color: #999;
+    margin-top: 5px;
+}
+.comment-menu .icon{
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.comment-menu .icon:hover{
+    color: #499ef3;
+}
+.comments{
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+#comment_section{
+    border-top: 1px solid #eee;
+}
+.comment-userImg{
+    padding-top: 10px;
+}
+.commentTotal{
+    border-bottom: 1px solid #eee;
+    padding-bottom:10px;
+    padding-top:20px;
+}
+#text-desc-num{
+    border-bottom: 1px solid #eee;
+    padding-bottom:10px;
+    padding-left: 0;
+}
+.description{
+    padding-top:20px;
+    padding-bottom:20px;
+    border-bottom: 1px solid #eee;
+}
+.editIcon{
+    padding-top:10px;
+    padding-bottom:10px;
+    border-bottom: 1px solid #eee;
 }

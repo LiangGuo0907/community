@@ -18,3 +18,4 @@ maven
 jdk1.8
 lombok
 H2
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate

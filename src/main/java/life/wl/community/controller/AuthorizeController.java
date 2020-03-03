@@ -21,8 +21,6 @@ import java.util.UUID;
 public class AuthorizeController {
     @Autowired
     private GithubProvider githubProvide;
-    @Autowired
-    private UserMapper githubUserMapper;
 
     @Value("${github.client.id}")
     private String clientId;
