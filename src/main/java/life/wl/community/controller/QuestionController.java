@@ -2,6 +2,7 @@ package life.wl.community.controller;
 
 import life.wl.community.dto.CommentDTO;
 import life.wl.community.dto.QuestionDTO;
+import life.wl.community.enums.CommentTypeEnum;
 import life.wl.community.service.CommentService;
 import life.wl.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class QuestionController {
     public String question(@PathVariable(name="id") Long id, Model model){
         QuestionDTO questionDTO = questionService.getById(id);
 
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
+        List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
 
         questionService.incView(id);//累加阅读数
         model.addAttribute("question",questionDTO);//问题详情

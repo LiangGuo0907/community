@@ -49,10 +49,21 @@ body{
     color: #999;
     margin-top: 5px;
 }
-.comment-menu .icon{
-    margin-right: 6px;
+/**.comment-menu .icon{
+     margin-right: 6px;
+     font-size: 15px;
+     cursor: pointer;
+ }*/
+.comment-menu .comment-icon{
     font-size: 15px;
     cursor: pointer;
+}
+.comment-menu .comment-icon:hover{
+    color: #499ef3;
+}
+
+.comment-menu .active{
+    color: #499ef3;
 }
 .comment-menu .icon:hover{
     color: #499ef3;
@@ -62,8 +73,20 @@ body{
     margin-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
+.sub-comments{
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 10px;
+}
+
+.sub-comments .btn{
+    margin: 10px 0;
+}
+
 #comment_section{
-    border-top: 1px solid #eee;
+    margin-top: -10px;
 }
 .comment-userImg{
     padding-top: 10px;
