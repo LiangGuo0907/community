@@ -1,11 +1,13 @@
 package life.wl.community.controller;
 
+import life.wl.community.cache.TagCache;
 import life.wl.community.dto.QuestionDTO;
 import life.wl.community.mapper.QuestionMapper;
 import life.wl.community.mapper.UserMapper;
 import life.wl.community.model.Question;
 import life.wl.community.model.User;
 import life.wl.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,8 @@ public class PublishController {
     private QuestionService questionService;
 
     @GetMapping("/publish")
-    public String publish(){
+    public String publish(Model model){
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -39,6 +42,11 @@ public class PublishController {
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
 
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null){
+            model.addAttribute("error","用户未登录!");
+            return "publish";
+        }
         if (title == null || title == ""){
             model.addAttribute("error","标题不能为空!");
             return "publish";
@@ -52,11 +60,12 @@ public class PublishController {
             return "publish";
         }
 
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null){
-            model.addAttribute("error","用户未登录!");
+        String invalid = TagCache.filterValid(tag);
+        if (StringUtils.isNotBlank(invalid)){
+            model.addAttribute("error",invalid+"标签不存在或者错误！");
             return "publish";
         }
+
         Question question = new Question();
         question.setTitle(title);
         question.setDescription(description);
@@ -77,6 +86,7 @@ public class PublishController {
         model.addAttribute("description",questionDTO.getDescription());
         model.addAttribute("tag",questionDTO.getTag());
         model.addAttribute("id",questionDTO.getId());
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 }

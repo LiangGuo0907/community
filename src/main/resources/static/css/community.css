@@ -132,3 +132,16 @@ body{
 .weibo{
     width: 100%;
 }
+.publish-tag-tap{
+    display: none;
+    margin-top: 10px;
+}
+.publish-tabpanel-tags{
+    width: 100%;
+    word-wrap: break-word;
+    font-size: 20px;
+}
+.publish-detail-tag{
+    margin-right: 7px;
+    cursor:pointer;
+}
