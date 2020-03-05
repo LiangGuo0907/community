@@ -24,4 +24,10 @@
     COMMENT_COUNT = COMMENT_COUNT + #{commentCount,jdbcType=INTEGER}
     where ID = #{id}
   </update>
+  <select id="selectRelated" parameterType="life.wl.community.model.Question" resultMap="BaseResultMap">
+    select
+    *
+    from QUESTION
+    where id != #{id} and tag REGEXP #{tag}
+  </select>
 </mapper>

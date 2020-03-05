@@ -10,6 +10,7 @@ import life.wl.community.mapper.UserMapper;
 import life.wl.community.model.Question;
 import life.wl.community.model.QuestionExample;
 import life.wl.community.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,10 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -153,5 +156,28 @@ public class QuestionService {
         question.setViewCount(1);
         questionExtMapper.incView(question);
 
+    }
+
+    /**
+     * 根据问题id和标签获取类似的tag
+     * @param questionDTO
+     * @return
+     */
+    public List<QuestionDTO> selectRelated(QuestionDTO questionDTO) {
+        if (StringUtils.isBlank(questionDTO.getTag())){
+            return new ArrayList<>();
+        }
+        String[] tags = StringUtils.split(questionDTO.getTag(),",");
+        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        Question question = new Question();
+        question.setId(questionDTO.getId());
+        question.setTag(regexpTag);
+        List<Question> questionList = questionExtMapper.selectRelated(question);
+        List<QuestionDTO> questionTags = questionList.stream().map(q -> {
+            QuestionDTO questionDTONew = new QuestionDTO();
+            BeanUtils.copyProperties(q, questionDTONew);
+            return questionDTONew;
+        }).collect(Collectors.toList());
+        return questionTags;
     }
 }

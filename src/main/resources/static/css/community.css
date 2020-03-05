@@ -111,3 +111,24 @@ body{
     padding-bottom:10px;
     border-bottom: 1px solid #eee;
 }
+.question-tags{
+    padding: 10px 0;
+    font-size: 15px;
+    border-bottom: 1px solid #eee;
+}
+.question-tag{
+    margin-right: 5px;
+}
+#ul-li{
+    padding: 5px 0;
+}
+.font-size-12{
+    font-size: 14px;
+    text-align: left;
+}
+.font-size-12 ul{
+    padding:0;
+}
+.weibo{
+    width: 100%;
+}
