@@ -3,6 +3,7 @@ package life.wl.community.controller;
 import life.wl.community.dto.PaginationDTO;
 import life.wl.community.mapper.UserMapper;
 import life.wl.community.model.User;
+import life.wl.community.service.NotificationService;
 import life.wl.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 public class ProfileController {
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action") String action, Model model,
                           HttpServletRequest request,
                           @RequestParam(name = "page", defaultValue = "1") Integer page,
-                          @RequestParam(name = "size", defaultValue = "3") Integer size) {
+                          @RequestParam(name = "size", defaultValue = "10") Integer size) {
 
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
@@ -33,13 +36,16 @@ public class ProfileController {
         if ("questions".equals(action)) {
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "我的提问");
+            PaginationDTO paginationDTO = questionService.list(user.getId(), page, size);
+            model.addAttribute("pagination",paginationDTO);
         } else if ("replies".equals(action)) {
+            PaginationDTO paginationDTO = notificationService.list(user.getId(),page,size);
+            Long unreadCount = notificationService.unreadCount(user.getId());
+            model.addAttribute("pagination",paginationDTO);
+            model.addAttribute("unreadCount",unreadCount);
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "最新回复");
         }
-
-        PaginationDTO paginationDTO = questionService.list(user.getId(), page, size);
-        model.addAttribute("pagination",paginationDTO);
         return "profile";
     }
 }

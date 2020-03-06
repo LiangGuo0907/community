@@ -32,12 +32,13 @@
                         <input type="text" class="form-control" autocomplete="off" th:value="${tag}" id="tag" name="tag" onclick="isShowSelectTag()" placeholder="输入标签，以逗号分隔">
                         <div id="select-tags" class="publish-tag-tap">
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" th:each="selectCategory: ${tags}">
+                                <li role="presentation" th:each="selectCategory,selectCategoryStat: ${tags}" th:class="${selectCategoryStat.first?'active':''}">
                                     <a th:href="${'#'+selectCategory.categoryName}" aria-controls="home" role="tab" data-toggle="tab" th:text="${selectCategory.categoryName}"></a>
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane publish-tabpanel-tags" th:id="${selectCategory.categoryName}" th:each="selectCategory: ${tags}">
+                                <div role="tabpanel" class="tab-pane publish-tabpanel-tags" th:id="${selectCategory.categoryName}"
+                                     th:each="selectCategory: ${tags}"  th:class="${selectCategoryStat.first?'active tab-pane publish-tabpanel-tags':'tab-pane publish-tabpanel-tags'}">
                                     <span class="label label-info publish-detail-tag" th:each="selectTag: ${selectCategory.tags}">
                                         <span onclick="selectTag(this)" th:data-tag="${selectTag}" th:text="${selectTag}"></span>
                                     </span>
@@ -45,8 +46,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <span class="alert alert-danger" th:text="${error}" th:if="${error != null}"></span>
+                    <div><span class="alert alert-danger" th:text="${error}" th:if="${error != null}"></span></div>
                     <button type="submit" class="btn btn-success btn-publish">发布</button>
                 </form>
             </div>

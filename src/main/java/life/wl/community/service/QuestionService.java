@@ -60,7 +60,7 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
             questionDTO.setTime(getTime(question.getGmtCreate()));
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         paginationDTO.setPagination(totalPage,page,size);
         return paginationDTO;
     }
@@ -95,7 +95,7 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
             questionDTO.setTime(getTime(question.getGmtCreate()));
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         paginationDTO.setPagination(totalPage,page,size);
         return paginationDTO;
     }
